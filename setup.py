@@ -6,7 +6,7 @@ virtenv = os.environ['OPENSHIFT_REPO_DIR'] + 'venv'
 virtualenv = os.path.join(virtenv, 'bin/activate_this.py')
 os.chdir(os.environ['OPENSHIFT_REPO_DIR'])
 call('virtualenv venv'.split())
-call('source '+virtenv+'/bin/activate'.split())
+call(('source '+virtenv+'/bin/activate').split())
 call('pip install django'.split())
 setup(name='mysite',
       version='1.0',
