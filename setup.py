@@ -2,9 +2,9 @@ from setuptools import setup
 from subprocess import call
 import os
 
-virtenv = os.environ['OPENSHIFT_REPO_DIR'] + '/venv/'
+virtenv = os.environ['OPENSHIFT_REPO_DIR']
 virtualenv = os.path.join(virtenv, 'bin/activate_this.py')
-os.chdir(virtenv+'../')
+os.chdir(os.environ['OPENSHIFT_REPO_DIR'])
 call('virtualenv venv')
 setup(name='mysite',
       version='1.0',
