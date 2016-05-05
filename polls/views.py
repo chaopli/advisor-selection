@@ -2,8 +2,10 @@ from django.shortcuts import render, get_object_or_404
 from django.http import HttpResponseRedirect, HttpResponse
 from django.core.urlresolvers import reverse
 from .forms import LoginForm
-from django.contrib.auth import authenticate, login
+from django.contrib.auth import authenticate, login, logout
+from django.contrib.auth.decorators import login_required
 from .models import Advisor, Student
+from django.views.decorators.csrf import csrf_exempt, ensure_csrf_cookie
 
 def loginpage(request):
     print('function called')
@@ -16,32 +18,29 @@ def loginpage(request):
         print('user authenticated')
         if user.is_active:
             login(request, user)
-            return index(request)
+            return index(request, user)
         else:
             print('user not active')
             return render(request, 'polls/login.html', {'form': form})
     else:
         return render(request, 'polls/login.html', {'form': form})
 
-def index(request):
+@login_required(login_url='login')
+def index(request, user):
+    print request.POST
+    print user
+    stuName = user.username
     if request.method == 'POST':
-        stuName = request.POST['user']
-        advName = request.POST['select']
-        student = Student.objects.get(uid=stuName)
-        student.advisor = advName
-        student.save()
+        print('index intrigued from post')
+        if 'select' in request.POST:
+            advName = request.POST['select']
+            student = Student.objects.get(uid=stuName)
+            student.advisor = advName
+            student.save()
     allAdvisors = Advisor.objects.all()
-    return render(request, 'polls/index.html', {'allAdvisors': allAdvisors})
+    return render(request, 'polls/index.html', {'allAdvisors': allAdvisors, 'stuName': stuName})
 
-def mylogin(request):
-    if request.method == 'POST':
-        username = request.POST['username']
-        password = request.POST['password']
-        user = authenticate(username=username, password=password)
-        if user.is_active:
-            login(request, user)
-            index(request)
-        else:
-            loginpage(request)
-    else:
-        loginpage(request)
+def logoutView(request):
+    logout(request)
+    return loginpage(request)
+
