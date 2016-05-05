@@ -2,13 +2,13 @@ from setuptools import setup
 from subprocess import call
 import os
 
+call('deactivate'.split())
 virtenv = os.environ['OPENSHIFT_REPO_DIR'] + 'venv'
 virtualenv = os.path.join(virtenv, 'bin/activate_this.py')
 os.chdir(os.environ['OPENSHIFT_REPO_DIR'])
 call('virtualenv venv'.split())
 os.chdir('venv/bin')
 print os.getcwd()
-call('deactivate'.split())
 call('source activate'.split())
 call('pip install django'.split())
 setup(name='mysite',
