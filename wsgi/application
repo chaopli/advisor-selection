@@ -14,5 +14,9 @@ except IOError:
 
 import sys
 import django.core.handlers.wsgi
-os.environ['DJANGO_SETTINGS_MODULE'] = os.environ['OPENSHIFT_APP_NAME'] + '.settings'
-sys.path.append(os.path.join(os.environ['OPENSHIFT_REPO_DIR'], os.environ['OPENSHIFT_APP_NAME']))
+os.environ['DJANGO_SETTINGS_MODULE'] = os.environ['OPENSHIFT_APP_NAME'] + 'mysite.settings'
+sys.path.append(os.path.join(os.environ['OPENSHIFT_REPO_DIR'], 'wsgi', 'mysite'))
+from distutils.sysconfig import get_python_lib
+os.environ['PYTHON_EGG_CACHE'] = get_python_lib()
+
+application = django.core.wsgi.get_wsgi_application()
