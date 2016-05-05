@@ -8,7 +8,8 @@ os.chdir(os.environ['OPENSHIFT_REPO_DIR'])
 call('virtualenv venv'.split())
 os.chdir('venv/bin')
 print os.getcwd()
-call(('source activate').split())
+call('deactivate'.split())
+call('source activate'.split())
 call('pip install django'.split())
 setup(name='mysite',
       version='1.0',
