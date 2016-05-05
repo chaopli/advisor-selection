@@ -10,6 +10,7 @@ For the full list of settings and their values, see
 https://docs.djangoproject.com/en/1.9/ref/settings/
 """
 
+import django
 import os
 
 # Build paths inside the project like this: os.path.join(BASE_DIR, ...)
@@ -121,7 +122,9 @@ USE_TZ = True
 
 PROJECT_ROOT = os.path.normpath(os.path.dirname(file))
 STATIC_URL = '/static/'
+DJANGO_PATH = os.dirname(django.__file__)
 STATICFILES_DIRS = [
     os.path.join(BASE_DIR, 'static'),
     os.path.join(PROJECT_ROOT, 'static'),
+    os.path.join(DJANGO_PATH, 'contrib/admin/static')
 ]
