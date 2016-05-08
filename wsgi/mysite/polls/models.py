@@ -1,8 +1,6 @@
 from __future__ import unicode_literals
 from django.db import models
 from django.contrib.auth.models import User
-import os
-
 
 class Advisor(models.Model):
     titleChoices = (
@@ -15,7 +13,7 @@ class Advisor(models.Model):
     age = models.SmallIntegerField()
     research = models.CharField(max_length=200)
     introduction = models.TextField()
-    photo = models.ImageField(upload_to=os.path.dirname(os.path.realpath(__file__))+'/static/faces/')
+    photo = models.ImageField(upload_to='faces')
 
     def __str__(self):
         return self.name
