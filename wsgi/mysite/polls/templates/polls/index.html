@@ -9,6 +9,27 @@
     <script src="http://code.jquery.com/jquery.min.js"></script>
     <script src="http://netdna.bootstrapcdn.com/bootstrap/3.1.0/js/bootstrap.min.js"></script>
     <meta name="viewport" content="width=device-width, initial-scale=1">
+    <script>
+      function setViews() {
+        var state = "{{state}}";
+        var availabelLength = "{{availableAdvisors | length}}"
+        var fullLength = "{{fullAdvisors | length}}"
+        if (state == "selected") {
+          buttons = document.getElementsByClassName("select-button");
+          for (i = 0; i < buttons.length; i++) {
+            buttons[i].style.display='none';
+          }
+        } else {
+          document.getElementById("reselect-label").style='display:none';
+        }
+        if (availabelLength == 0) {
+          document.getElementById("available-advisors").style.display='none';
+        }
+        if (fullLength == 0) {
+          document.getElementById("full-advisors").style.display='none';
+        }
+      }
+    </script>
   </head>
   <style>
     .bootstrap-demo{margin:30px;}
@@ -21,46 +42,90 @@
           <a class="navbar-brand" href="#">Advisor Selection System</a>
           <p class="navbar-text navbar-right">Signed in as <a href="#" class="navbar-link">{{stuName}}</a></p>
           <p class="navbar-text navbar-right"><a href="logout" class="navbar-link">Log Out</a></p>
+          <p id="reselect-label" class="navbar-text navbar-right"><a href="reselect" class="navbar-link">reselect</a></p>
         </div>
       </div><!-- /.container-fluid -->
     </nav>
     <div class="bootstrap-demo">
-      <div class="row">
-
-        {% for advisor in allAdvisors %}
-        <div class="col-sm-6 col-md-4"> <!-- column 1 -->
-          <div class="thumbnail"> <!--  thumbnail 1  -->
-            <img src="media{{advisor.photo}}" alt="{{advisor.name}}"> <!-- image 1 -->
-            <div class="caption"> <!-- caption -->
-              <h3>{{advisor.name}}</h3>
-              <h4>{{advisor.title}}</h4>
-              <p>{{advisor.research}}</p>
-              <p> <a href="select-{{advisor.name}}" class="btn btn-primary" role="button" >select</a>
+      <div id="available-advisors">
+        <h2> Available Advisors </h2>
+        <div class="row">
+          {% for advisor in availableAdvisors %}
+          <div class="col-sm-6 col-md-4"> <!-- column 1 -->
+            <div class="thumbnail"> <!--  thumbnail 1  -->
+              <img src="media{{advisor.photo}}" alt="{{advisor.name}}"> <!-- image 1 -->
+              <div class="caption"> <!-- caption -->
+                <h3>{{advisor.name}}</h3>
+                <h4>{{advisor.title}}</h4>
+                <p>{{advisor.research}}</p>
+                <p> <a href="select-{{advisor.name}}" class="select-button btn btn-primary" role="button">select</a>
                   <a href="#" class="btn btn-default" role="button" data-toggle="modal" data-target="#myModal">show detail</a></p>  <!-- btn 2 -->
-              <!-- Modal -->
-              <div class="modal fade" id="myModal" role="dialog">
-                <div class="modal-dialog">
+                <!-- Modal -->
+                <div class="modal fade" id="myModal" role="dialog">
+                  <div class="modal-dialog">
 
-                  <!-- Modal content-->
-                  <div class="modal-content">
-                    <div class="modal-header">
-                      <button type="button" class="close" data-dismiss="modal">&times;</button>
-                      <h4 class="modal-title">{{advisor.name}}</h4>
-                    </div>
-                    <div class="modal-body">
-                      <p>{{advisor.introduction}}</p>
-                    </div>
-                    <div class="modal-footer">
-                      <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+                    <!-- Modal content-->
+                    <div class="modal-content">
+                      <div class="modal-header">
+                        <button type="button" class="close" data-dismiss="modal">&times;</button>
+                        <h4 class="modal-title">{{advisor.name}}</h4>
+                      </div>
+                      <div class="modal-body">
+                        <p>{{advisor.introduction}}</p>
+                      </div>
+                      <div class="modal-footer">
+                        <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+                      </div>
                     </div>
                   </div>
                 </div>
               </div>
             </div>
           </div>
+          {% endfor %}
         </div>
-        {% endfor %}
+      </div>
+      <div id="full-advisors">
+        <h2> Full Advisors </h2>
+        <div id="full-advisors" class="row">
+          {% for advisor in fullAdvisors %}
+          <div class="col-sm-6 col-md-4"> <!-- column 1 -->
+            <div class="thumbnail"> <!--  thumbnail 1  -->
+              <img src="media{{advisor.photo}}" alt="{{advisor.name}}"> <!-- image 1 -->
+              <div class="caption"> <!-- caption -->
+                <h3>{{advisor.name}}</h3>
+                <h4>{{advisor.title}}</h4>
+                <p>{{advisor.research}}</p>
+                <p> <a href="select-{{advisor.name}}" class="select-button btn btn-primary" role="button">select</a>
+                  <a href="#" class="btn btn-default" role="button" data-toggle="modal" data-target="#myModal">show detail</a></p>  <!-- btn 2 -->
+                <!-- Modal -->
+                <div class="modal fade" id="myModal" role="dialog">
+                  <div class="modal-dialog">
+
+                    <!-- Modal content-->
+                    <div class="modal-content">
+                      <div class="modal-header">
+                        <button type="button" class="close" data-dismiss="modal">&times;</button>
+                        <h4 class="modal-title">{{advisor.name}}</h4>
+                      </div>
+                      <div class="modal-body">
+                        <p>{{advisor.introduction}}</p>
+                      </div>
+                      <div class="modal-footer">
+                        <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+          {% endfor %}
+        </div>
       </div>
     </div>
+    <script>
+      setViews()
+    </script>
   </body>
 </html>

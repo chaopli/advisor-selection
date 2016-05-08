@@ -3,7 +3,9 @@ from django.http import HttpResponseRedirect
 from .forms import LoginForm
 from django.contrib.auth import authenticate, login, logout
 from django.contrib.auth.decorators import login_required
-from .models import Advisor, Student
+from .models import Advisor, Selection
+from django.db.models import Count
+from django.core.exceptions import ObjectDoesNotExist
 
 
 def loginpage(request):
@@ -27,20 +29,50 @@ def loginpage(request):
         return render(request, 'polls/login.html', {'form': form})
 
 
-@login_required(login_url='login')
+@login_required(login_url='loginpage')
 def index(request):
     print request.POST
     stuName = request.user.username
     allAdvisors = Advisor.objects.all()
-    return render(request, 'polls/index.html', {'allAdvisors': allAdvisors, 'stuName': stuName})
+    availableAdvisors, fullAdvisors = [], []
+    for advisor in allAdvisors:
+        if Selection.objects.filter(advisor=advisor).count() >= 5:
+            fullAdvisors.append(advisor.name)
+        else:
+            availableAdvisors.append(advisor.name)
+    state = 'selected'
+    try:
+        Selection.objects.get(student=request.user)
+    except ObjectDoesNotExist:
+        state = ''
+    return render(request, 'polls/index.html', {'availableAdvisors': availableAdvisors,
+                                                'stuName': stuName, 'state': state,
+                                                'fullAdvisors': fullAdvisors})
 
 
-@login_required(login_url='login')
+@login_required(login_url='loginpage')
 def select(request, advisor=None):
     print advisor, request.user.username
+    advisor = Advisor.objects.get(name=advisor)
+    try:
+        selection = Selection.objects.get(student=request.user)
+    except ObjectDoesNotExist:
+        selection = Selection(student=request.user, advisor=advisor)
+        selection.save()
     return HttpResponseRedirect('index')
 
 
+@login_required(login_url='loginpage')
 def logoutView(request):
     logout(request)
     return HttpResponseRedirect('login')
+
+
+@login_required(login_url='loginpage')
+def reselect(request):
+    user = request.user
+    try:
+        Selection.objects.get(student=request.user).delete()
+    except ObjectDoesNotExist:
+        pass
+    return HttpResponseRedirect('index')
