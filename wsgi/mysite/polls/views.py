@@ -37,9 +37,9 @@ def index(request):
     availableAdvisors, fullAdvisors = [], []
     for advisor in allAdvisors:
         if Selection.objects.filter(advisor=advisor).count() >= 5:
-            fullAdvisors.append(advisor.name)
+            fullAdvisors.append(advisor)
         else:
-            availableAdvisors.append(advisor.name)
+            availableAdvisors.append(advisor)
     state = 'selected'
     try:
         Selection.objects.get(student=request.user)
