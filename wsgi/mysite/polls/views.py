@@ -6,6 +6,7 @@ from django.contrib.auth.decorators import login_required
 from .models import Advisor, Selection
 from django.db.models import Count
 from django.core.exceptions import ObjectDoesNotExist
+from django.core.urlresolvers import reverse
 
 
 def loginpage(request):
@@ -29,7 +30,7 @@ def loginpage(request):
         return render(request, 'polls/login.html', {'form': form})
 
 
-@login_required(login_url='loginpage')
+@login_required(login_url='/polls/login')
 def index(request):
     print request.POST
     stuName = request.user.username
@@ -50,7 +51,7 @@ def index(request):
                                                 'fullAdvisors': fullAdvisors})
 
 
-@login_required(login_url='loginpage')
+@login_required(login_url='/polls/login')
 def select(request, advisor=None):
     print advisor, request.user.username
     advisor = Advisor.objects.get(name=advisor)
@@ -62,13 +63,13 @@ def select(request, advisor=None):
     return HttpResponseRedirect('index')
 
 
-@login_required(login_url='loginpage')
+@login_required(login_url='/polls/login')
 def logoutView(request):
     logout(request)
     return HttpResponseRedirect('login')
 
 
-@login_required(login_url='loginpage')
+@login_required(login_url='/polls/login')
 def reselect(request):
     user = request.user
     try:
