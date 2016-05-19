@@ -53,7 +53,7 @@
           {% for advisor in availableAdvisors %}
           <div class="col-sm-6 col-md-4"> <!-- column 1 -->
             <div class="thumbnail"> <!--  thumbnail 1  -->
-              <img src="media{{advisor.photo}}" alt="{{advisor.name}}"> <!-- image 1 -->
+              <img src="{{MEDIA_URL}}{{advisor.photo}}" alt="{{advisor.name}}"> <!-- image 1 -->
               <div class="caption"> <!-- caption -->
                 <h3>{{advisor.name}}</h3>
                 <h4>{{advisor.title}}</h4>

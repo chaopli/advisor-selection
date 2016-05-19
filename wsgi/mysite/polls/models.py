@@ -13,7 +13,6 @@ class Advisor(models.Model):
     age = models.SmallIntegerField()
     research = models.CharField(max_length=200)
     introduction = models.TextField()
-    photo = models.ImageField(upload_to='faces')
 
     def __str__(self):
         return self.name
