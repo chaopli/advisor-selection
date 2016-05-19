@@ -1,5 +1,5 @@
-from django.conf.urls import patterns, url
-from django.conf import settings
+from django.conf.urls import  url
+
 
 from . import views
 
@@ -12,9 +12,3 @@ urlpatterns = [
     url(r'^select-(?P<advisor>[\w.@+-]+)$', views.select),
     url(r'^reselect$', views.reselect),
 ]
-
-if settings.DEBUG:
-    # static files (images, css, javascript, etc.)
-    urlpatterns += patterns('',
-                            (r'^media/(?P<path>.*)$', 'django.views.static.serve',
-                             { 'document_root': settings.MEDIA_ROOT}))
