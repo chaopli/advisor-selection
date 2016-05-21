@@ -46,9 +46,17 @@ git clone https://github.com/chaopli/advisor-selection
 
 ##### Migrate database
 In the root directory of our project, which has the `manage.py` file, we can migrate our database with the following command.
+###### Migrate Django models
 ```shell
 python manage.py migrate
 ```
+###### Migrate our models
+```shell
+python manage.py makemigrations polls
+python manage.py migrate 
+```
+Each time we make changes to our polls.models, we need to use `python manage.py makemigrations polls` to update the database.
+
 Then django will parse our `model` modules to create corresponding schema, table, etc.
 
 ##### Run the Django server locally
