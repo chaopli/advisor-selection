@@ -1,6 +1,6 @@
 # Advisor Selection System 
 ## Introduction
-This is an advisor selection system I was asked to build from a friend, though was not used in production eventually. I learned many web development knowledge from this project. The main source of the knowledge is from the Django official [tutorial](https://docs.djangoproject.com/en/1.9/contents/). As you can see the app in this project has the same name as it is in the tutorial, but the functionality is quite different.
+This is an advisor selection system I was asked to build from a friend, though was not used in production eventually. I learned many web development knowledge from this project. The main source of the knowledge is from the Django official [tutorial](https://docs.djangoproject.com/en/1.9/contents/), as you can see the app in this project has the same name as it is in the tutorial, but the functionality is quite different.
 
 ## Project Overview
 This project is very simple in functionality. The administrator creates users for students, and create information for advisors. Students could log into the website with the username and password assigned to them by default. Each advisor could take at most 5 students. The full advisors and available advisors could be shown separately.
@@ -13,12 +13,14 @@ I am no web dev expert and I don't know much principals in developing web servic
 - Django
 
 ## Quick Start (Linux / OS X)
+I am not familiar with deploying python virtual environment on Windows platforms, so in this quick start, I will not cover how to setup on Windows. But I think it will not be differed quite much.
+If you meet any permission problem during the setup process, try using `sudo` on the command.
 
 ### Install pip
 A lot of tools we will use can be installed from pip, which is a package management tools for python. To install pip, use the following command.
 
 ```shell
-[sudo] curl -O https://bootstrap.pypa.io/get-pip.py && python get-pip.py
+curl -O https://bootstrap.pypa.io/get-pip.py && python get-pip.py
 ```
 
 ### Install Virtual Environment of Python
