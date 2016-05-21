@@ -33,7 +33,17 @@ cd $Workspace/mysite
 virtualenv venv && . ./venv/bin/activate
 ```
 
-### Create a Django project
+### Setup project
+#### Create a Django project
 ```shell
 django-admin startproject mysite
 ```
+And then you can go into the root directory of mysite, playing with manage.py with commands like `python manage.py runserver`.
+
+#### Use the Django project in this repo
+```shell
+git clone https://github.com/chaopli/advisor-selection
+```
+And then you can use `python manage.py runserver` to start the Django http server locally.
+
+After the server is started successfully, you can use any browser, use `http://localhost:8000` to test the site.
