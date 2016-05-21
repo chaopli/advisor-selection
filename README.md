@@ -58,8 +58,16 @@ python manage.py migrate
 Each time we make changes to our polls.models, we need to use `python manage.py makemigrations polls` to update the database.
 
 Then django will parse our `model` modules to create corresponding schema, table, etc.
+#### Create a super user
+Use the `manage.py` to create a super user with `python manage.py createsuperuser`. You will be prompted to set the username and password.
 
-##### Run the Django server locally
+#### Run the Django server locally
 Finally, you can use `python manage.py runserver` to start the Django http server locally.
 
 After the server is started successfully, you can use any browser, use `http://localhost:8000` to test the site.
+To log into the admin page for your project, use `http://localhost:8000/admin` with the super user you just created.
+
+### Deploy on openshift
+This project has been deployed on openshift successfully. You can try registering for a account. One account can be used to create at most three projects.
+Once you created a project, you will be provided with a git url. You can add that git url to your local git remote url and push your repo to that url.
+Your project will be deployed automatically on openshift.
